@@ -6,8 +6,8 @@ import { generateReceipt } from '../utils/generateReceipt.js';
 import { sendInvoiceEmail } from '../utils/sendEmail.js';
 
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
+  key_id: process.env.TEST_RAZORPAY_KEY_ID,
+  key_secret: process.env.TEST_RAZORPAY_KEY_SECRET,
 });
 
 // Create Razorpay Order
@@ -16,6 +16,9 @@ import { v4 as uuidv4 } from 'uuid'; // Import UUID library to generate unique I
 export const createRazorpayOrder = async (req, res) => {
   const { amount, currency, name, email, user_id, product_id } = req.body;
   console.log("Payment detail", amount, currency, name, email, user_id, product_id);
+
+  // Save the original amount (before conversion)
+  const originalAmount = amount;
 
   // Convert amount to smallest unit depending on currency
   let amountInSmallestUnit;
@@ -30,7 +33,7 @@ export const createRazorpayOrder = async (req, res) => {
     // Generate a unique receipt ID
     const uniquePart = uuidv4().split('-')[0]; // First part of UUID
     const timestamp = Date.now();
-  const receiptId = `receipt_${uniquePart}${timestamp}`.slice(0, 39);
+    const receiptId = `receipt_${uniquePart}${timestamp}`.slice(0, 39);
 
     const options = {
       amount: amountInSmallestUnit, // Amount in smallest currency unit
@@ -42,11 +45,11 @@ export const createRazorpayOrder = async (req, res) => {
     const order = await razorpay.orders.create(options);
     console.log("Order created:", order);
 
-    // Save order details in your DB
+    // Save the actual amount (before conversion) and order details in your DB
     await Order.create({
       orderid: order.id,
       user_id,
-      amount: order.amount,
+      amount: originalAmount, // Store the original amount
       currency: order.currency,
       status: order.status,
       productid: product_id,
@@ -54,7 +57,7 @@ export const createRazorpayOrder = async (req, res) => {
     });
 
     // Return order to frontend
-    res.status(200).json({ data: order });
+    res.status(200).json({ data: order, });
   } catch (error) {
     console.error('Error creating Razorpay order:', error);
     res.status(500).json({ error: 'Failed to create order' });
@@ -74,19 +77,16 @@ export const paymentSuccess = async (req, res) => {
     const [updated] = await Order.update({ status: 'paid' }, { where: { orderid: order_id } });
 
     if (updated) {
-      // Fetch the updated order details including the receipt ID
+      // Fetch the updated order details including the receipt ID and original amount
       const orderDetails = await Order.findOne({ where: { orderid: order_id } });
 
       if (orderDetails) {
-        const { receiptid } = orderDetails; // Get the stored receipt ID
+        const { receiptid, amount, currency, status } = orderDetails; // Get the stored details
 
-        // Generate the invoice PDF receipt
-       // const pdfPath = await generateReceipt(orderDetails); // Assume this function generates the PDF
-
-        // Send invoice email with PDF attachment
+        // Send invoice email with the original amount and other details
         await sendInvoiceEmail(email, {
           orderid: orderDetails.orderid,
-          amount: orderDetails.amount,
+          amount, // Send the original amount (not converted)
           currency: orderDetails.currency,
           status: orderDetails.status,
           name, // Include the name of the user
@@ -106,6 +106,7 @@ export const paymentSuccess = async (req, res) => {
     res.status(500).json({ error: 'Payment success failed' });
   }
 };
+
 
 const verifyRazorpayCredentials = async () => {
   try {
