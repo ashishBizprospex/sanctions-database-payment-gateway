@@ -34,7 +34,7 @@ app.use('/api/v1', paymentRoute);
 
 // Global route for health check
 app.get('/', (req, res) => {
-  res.send("Hello this is the global funding data server made by Ashish Yenurkar");
+  res.send("Hello this is the sactions data payment gateway server made by Ashish Yenurkar");
 });
 
 // Start the server only after connecting to the database

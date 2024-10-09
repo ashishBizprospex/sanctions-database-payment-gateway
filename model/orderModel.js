@@ -73,12 +73,12 @@ const Order = sequelize.define('Order', {
 });
 
 // Sync the model with the database
-// sequelize.sync({ alter: true })
-//   .then(() => {
-//     console.log('Order table synced successfully.');
-//   })
-//   .catch(err => {
-//     console.error('Error syncing Order table:', err);
-//   });
+sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('Order table synced successfully.');
+  })
+  .catch(err => {
+    console.error('Error syncing Order table:', err);
+  });
 
 export default Order;
