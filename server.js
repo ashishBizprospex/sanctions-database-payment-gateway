@@ -17,10 +17,11 @@ const allowedOrigins = ['http://localhost:2001','http://localhost:5173','https:/
 
 // CORS configuration
 const corsOptions = {
-  origin: allowedOrigins,
-  credentials: true, // Allow credentials
-  optionsSuccessStatus: 200, // For older browsers
+  origin: "*", // Allow all origins
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  optionsSuccessStatus: 200, // For older browsers (they may not handle 204 correctly)
 };
+
 
 app.use(cors(corsOptions));
 // Middleware to parse incoming requests
