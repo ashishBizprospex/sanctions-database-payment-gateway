@@ -17,12 +17,14 @@ export const generateReceipt = (orderDetails) => {
   doc
     .image('./SanctionsDatabase_logo.png', 30, 20, { width: 40 })
     .fontSize(14)
-    .text('ExhibitorsData.com', 80, 30)
-    .fontSize(10)
-    .text('1234 Main Street', { align: 'right' }) // Removed overlapping positioning
-    .text('City, State, ZIP Code', { align: 'right' })
-    .text('Phone: (555) 555-5555', { align: 'right' })
-    .text('Email: info@exhibitorsdata.com', { align: 'right' })
+    .text('Prospex Network Pvt. Ltd', 150, 18)
+    .fontSize(8)
+    .text('', { align: 'right' }) 
+    .text('1st Floor, Prakash Tower,', { align: 'right' }) // Removed overlapping positioning
+    .text('Behind Prakash Talkies Khanda', { align: 'right' }) 
+    .text('Burhanpur, Madhya Pradesh, 450331', { align: 'right' })
+    .text('Email: info@sanctionsdatabase.com', { align: 'right' })
+    .text('GST No.: 23AALCP3076F1ZG', { align: 'right' })
     .moveDown(2);
 
   // Receipt title
@@ -33,7 +35,7 @@ export const generateReceipt = (orderDetails) => {
 
   // Billing Information Section
   const leftX = 30;
-  const rightX = 300; // Adjusted right margin for better spacing
+  const rightX = 220; // Adjusted right margin for better spacing
   const startY = 140;
 
   doc
@@ -93,7 +95,7 @@ export const generateReceipt = (orderDetails) => {
   const footerY = totalY + 40;
   doc
     .fontSize(8)
-    .text('If you have any questions, please contact us at info@exhibitorsdata.com.', leftX, footerY, { align: 'center' })
+    .text('If you have any questions, please contact us at info@sanctionsdatabase.com.', leftX, footerY, { align: 'center' })
     .text('Thank you for your business!', leftX, footerY + 12, { align: 'center' });
 
   // Finalize the PDF and end the stream

@@ -90,7 +90,8 @@ export const paymentSuccess = async (req, res) => {
           currency: orderDetails.currency,
           status: orderDetails.status,
           name, // Include the name of the user
-          receiptid // Include the receipt ID in the email
+          receiptid, // Include the receipt ID in the email
+          created_date:orderDetails.created_date
         });
 
         // Send success response

@@ -20,7 +20,7 @@ export async function sendResetPasswordEmail(toEmail, resetTokenurl) {
 
     // Email options for reset password
     const mailOptions = {
-        from: 'info@exhibitorsdata.com', // Sender address
+        from: 'info@sanctionsdatabase.com', // Sender address
         to: toEmail, // Recipient email
         subject: 'Password Reset Request', // Email subject
         html: `
@@ -51,7 +51,7 @@ export async function sendInvoiceEmail(toEmail, orderDetails) {
 
     // Email options for invoice
     const mailOptions = {
-        from: 'info@exhibitorsdata.com', // Sender address
+        from: 'info@sanctionsdatabase.com', // Sender address
         to: toEmail, // Recipient email
         subject: `Invoice for Order #${orderDetails.orderid}`, // Email subject
         html: `
@@ -59,8 +59,8 @@ export async function sendInvoiceEmail(toEmail, orderDetails) {
             <p>Dear ${orderDetails.name},</p>
             <p>Attached is your invoice for the order #${orderDetails.orderid}.</p>
             <p>Order Amount: ${orderDetails.amount} ${orderDetails.currency}</p>
-            <p>Order Date: ${orderDetails.order_date}</p>
-            <p>If you have any questions, feel free to contact us.</p>
+            <p>Order Date: ${new Date().toLocaleString()}</p>
+            <p>If you have any questions, feel free to contact us. <a href="https://sanctionsdatabase.com/contact">Contact</a></p>
         `,
         attachments: [
             {
