@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 
 // Define your allowed origins (frontend URL)
-const allowedOrigins = ['http://localhost:2001','http://localhost:5173']; // Adjust this as needed for production
+const allowedOrigins = ['http://localhost:2001','http://localhost:5173','https://api.aml-pep-data.com']; // Adjust this as needed for production
 
 // CORS configuration
 const corsOptions = {
