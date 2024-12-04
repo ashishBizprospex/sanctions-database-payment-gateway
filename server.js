@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 
 // Define your allowed origins (frontend URL)
-const allowedOrigins = ['http://localhost:5173','https://sanctionsdatabase.com','http://localhost:3000','http://localhost:4000']; // Adjust this as needed for production
+const allowedOrigins = ['http://localhost:5173','https://sanctionsdatabase.com','http://localhost:3000','http://localhost:4000','https://dashboard.exhibitorsdata.com']; // Adjust this as needed for production
 
 // CORS configuration
 const corsOptions = {
