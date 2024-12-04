@@ -3,7 +3,7 @@ import sequelize, { connectDB } from "./db/db.js";
 import dotenv from "dotenv";
 
 import paymentRoute from "./routes/paymentRoute.js";
-
+import dataCountRoute from "./routes/dataCountRoute.js";
 import cors from 'cors';  // Import cors
 
 // Initialize environment variables
@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 
 // Define your allowed origins (frontend URL)
-const allowedOrigins = ['http://localhost:5173','https://sanctionsdatabase.com']; // Adjust this as needed for production
+const allowedOrigins = ['http://localhost:5173','https://sanctionsdatabase.com','http://localhost:3000','http://localhost:4000']; // Adjust this as needed for production
 
 // CORS configuration
 const corsOptions = {
@@ -32,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 // Declare routes
 
 app.use('/api/v1', paymentRoute);
+app.use('/api/v1', dataCountRoute);
 
 // Global route for health check
 app.get('/', (req, res) => {
