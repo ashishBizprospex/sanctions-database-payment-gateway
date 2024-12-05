@@ -17,7 +17,7 @@ const allowedOrigins = ['http://localhost:5173','https://sanctionsdatabase.com',
 
 // CORS configuration
 const corsOptions = {
-  origin: allowedOrigins, // Allow all origins
+  origin: "*", // Allow all origins
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   optionsSuccessStatus: 200, // For older browsers (they may not handle 204 correctly)
 };
